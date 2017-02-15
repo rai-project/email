@@ -6,7 +6,7 @@
 aws:
   ...
 email:
-  provider: mailgun
+  provider: ses
   source: postmaster@rai-project.com
   domain: rai-project.com
 ~~~
