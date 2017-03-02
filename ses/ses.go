@@ -11,7 +11,11 @@ type sesEmail struct {
 	*session.Session
 }
 
-func New() (email.Email, error) {
+func New(sess *session.Session) (email.Email, error) {
+	if sess != nil {
+		return &sesEmail{sess}, nil
+	}
+
 	sess, err := session.NewSession()
 	if err != nil {
 		return nil, err
