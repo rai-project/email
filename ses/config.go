@@ -7,24 +7,31 @@ import (
 )
 
 type sesConfig struct {
-	Provider string `json:"provider" config:"email.provider" default:"mailgun"`
+	Provider string `json:"provider" config:"email.provider"`
 	Source   string `json:"source" config:"email.source" default:"postmaster@rai-project.com" env:"EMAIL_ADDR"`
 	Domain   string `json:"domain" config:"email.domain" env:"EMAIL_DOMAIN"`
 }
 
 var (
-	Config = &sesConfig{}
+	Config = &sesConfig{
+		done: make(chan struct{}),
+	}
 )
 
 func (*sesConfig) ConfigName() string {
 	return "SES"
 }
 
-func (*sesConfig) SetDefaults() {
+func (a *sesConfig) SetDefaults() {
+	vipertags.SetDefaults(a)
 }
 
 func (a *sesConfig) Read() {
 	vipertags.Fill(a)
+}
+
+func (c sesConfig) Wait() {
+	<-c.done
 }
 
 func (c *sesConfig) String() string {
