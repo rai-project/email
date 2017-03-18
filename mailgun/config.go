@@ -30,6 +30,7 @@ func (a *mailgunConfig) SetDefaults() {
 }
 
 func (a *mailgunConfig) Read() {
+	defer close(a.done)
 	vipertags.Fill(a)
 }
 
