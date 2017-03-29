@@ -11,7 +11,7 @@ type mailgunEmail struct {
 }
 
 func New() (email.Email, error) {
-	mg := mailgun.NewMailgun(Config.Domain, Config.ApiKey, Config.PublicApiKey)
+	mg := mailgun.NewMailgun(Config.Domain, Config.ApiKey, Config.PublicKey)
 	return &mailgunEmail{mg}, nil
 }
 
